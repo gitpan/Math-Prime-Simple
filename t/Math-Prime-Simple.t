@@ -19,5 +19,5 @@ BEGIN {
 );
 
 $primes = prime(\@ranges);
-is($$primes[0][-2], '10589', 'prime (\@ranges)');
-is(each_prime(0, $primes), '10501', 'each_prime ($item, $primes)');
+is($$primes[0][-2], '10589', 'prime (\@ranges);');
+is(each_prime(0, $primes), '10501', 'each_prime ($item, $primes);');

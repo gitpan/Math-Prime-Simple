@@ -1,4 +1,4 @@
-# $Id: Simple.pm,v 0.03 2004/01/14 22:40:56 sts Exp $
+# $Id: Simple.pm,v 0.04 2004/01/14 22:40:56 sts Exp $
 
 package Math::Prime::Simple;
 
@@ -7,7 +7,7 @@ use integer;
 use strict 'vars';
 use warnings;
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 use Exporter;
 use base qw(Exporter);
