@@ -5,7 +5,7 @@ use warnings;
 use Math::Prime::Simple qw(prime each_prime);
 
 my @ranges = ([ 10500, 10600 ]);         
-my $primes = prime( \@ranges );
+my $primes = prime( @ranges );
 
 print <<'EOT';
 ------

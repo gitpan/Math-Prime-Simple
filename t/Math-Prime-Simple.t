@@ -13,7 +13,7 @@ BEGIN {
 }
 
 my @ranges = ([ 10500, 10600 ]);
-my $primes = prime( \@ranges );
+my $primes = prime( @ranges );
 
-is( $primes->[0][-2], 10589, 'prime( \@ranges ); ');
+is( $primes->[0][-2], 10589, 'prime( @ranges ); ');
 is( each_prime( 0, $primes ), 10501, 'each_prime( $index, $primes ); ');
