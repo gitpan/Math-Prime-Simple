@@ -1,4 +1,4 @@
-# $Id: Simple.pm,v 0.02 2004/01/14 13:49:58 sts Exp $
+# $Id: Simple.pm,v 0.03 2004/01/14 22:40:56 sts Exp $
 
 package Math::Prime::Simple;
 
@@ -7,7 +7,7 @@ use integer;
 use strict 'vars';
 use warnings;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 use Exporter;
 use base qw(Exporter);
@@ -19,9 +19,6 @@ our (@EXPORT_OK, %EXPORT_TAGS, @subs);
 @EXPORT_OK = @subs;
 %EXPORT_TAGS = (  all  =>    [ @subs ],
 );
-
-sub TRUE { 1 }
-sub FALSE { 0 }
 
 sub croak {
     require Carp;
@@ -50,7 +47,7 @@ Math::Prime::Simple - calculate prime numbers.
 
 =head1 DESCRIPTION
 
-C<Math::Prime::Simple> calculates prime numbers by applying the modulo operator.
+C<Math::Prime::Simple> calculates prime numbers by applying the Sieve of Eratosthenes.
 
 =head1 FUNCTIONS
 
@@ -75,14 +72,18 @@ sub prime {
     croak q~usage: prime (\@ranges)~
       unless @$data_ref && ref $data_ref eq 'ARRAY';
 	
-    my @prime;
+    my (%composite, @prime);
     for (my $s = 0; $s < @$data_ref; $s++) {
-        for (my $i = $$data_ref[$s][0]; $i <= $$data_ref[$s][1]; $i++) {
-            my $is_prime = TRUE;
-            for (my $c = 2; $c < $i; $c++) {
-                $is_prime = FALSE if $i % $c == 0;
+        for (my $i = 2; $i <= $$data_ref[$s][1]; $i++) {
+            next if $composite{$i};
+	    my $calc = 0;	
+	    for (my $c = 2; $calc <= $$data_ref[$s][1]; $c++)  {
+	        $calc = $i * $c;
+	        $composite{$calc} = 1;
+	    }
+	    if ($i > $$data_ref[$s][0]) {
+                push @{$prime[$s]}, $i;
             }
-            push @{$prime[$s]}, $i if $is_prime;
         }
     }
     
