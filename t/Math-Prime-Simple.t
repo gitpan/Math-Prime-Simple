@@ -5,7 +5,7 @@ use warnings;
 
 use Test::More tests => 4;
 
-use Math::Prime::Simple q/:all/;
+use Math::Prime::Simple qw(prime each_prime);
 
 my (@ranges, $primes, $prime);
 

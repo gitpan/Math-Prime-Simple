@@ -1,18 +1,16 @@
-# $Id: Simple.pm,v 0.06 2004/01/14 22:40:56 sts Exp $
+# $Id: Simple.pm,v 0.07 2004/01/14 22:40:56 sts Exp $
 
 package Math::Prime::Simple;
 
 use 5.006;
-use base(Exporter);
+use base qw(Exporter);
 use integer;
 use strict 'vars';
 use warnings;
 
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 
 our @EXPORT_OK = qw(prime each_prime);
-our %EXPORT_TAGS = (  all  =>    [ @EXPORT_OK ],
-);
 
 sub croak {
     require Carp;
@@ -25,7 +23,7 @@ Math::Prime::Simple - calculate prime numbers.
 
 =head1 SYNOPSIS
 
- use Math::Prime::Simple q/:all/;
+ use Math::Prime::Simple qw(prime each_prime);
 
  @ranges = (    [ 1000, 1100 ],
               [ 10000, 11000 ],
@@ -56,7 +54,7 @@ Calculates prime numbers.
  $primes = prime (\@ranges);
 
 Each range within @ranges will be evaluated and its prime numbers will be
-saved within the array ref $primes, accessible by the array index e.g the 
+saved within the arrayref $primes, accessible by the array index e.g the 
 prime numbers of the first range may be accessed by @{$$primes[0]}. 
 
 =cut
@@ -86,7 +84,7 @@ sub prime {
 
 =head2 each_prime
 
-Returns each prime number in a scalar context.
+Returns each prime number as string.
 
  while ($prime = each_prime ($item, $primes)) {
      print "$prime\n";
@@ -121,23 +119,6 @@ __END__
 
 =head1 EXPORT
 
-C<prime(), each_prime()> upon request.
-
-B<TAGS>
-
-C<:all - *()>
-
-=head1 SEE ALSO
-
-perl(1)
-
-=head1 LICENSE
-
-This program is free software; 
-you may redistribute it and/or modify it under the same terms as Perl itself.
-
-=head1 AUTHOR
-
-Steven Schubiger
+C<prime(), each_prime()> are exportable.
 
 =cut

@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Math::Prime::Simple q/:all/;
+use Math::Prime::Simple qw(prime each_prime);
 
 my (@ranges, $primes);
 
@@ -14,7 +14,7 @@ $primes = prime(\@ranges);
 
 print <<'EOT';
 ------
-PRIMES
+primes
 ------
 
 EOT
