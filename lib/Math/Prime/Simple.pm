@@ -1,23 +1,17 @@
-# $Id: Simple.pm,v 0.04 2004/01/14 22:40:56 sts Exp $
+# $Id: Simple.pm,v 0.05 2004/01/14 22:40:56 sts Exp $
 
 package Math::Prime::Simple;
 
 use 5.006;
+use base qw(Exporter);
 use integer;
 use strict 'vars';
 use warnings;
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
-use Exporter;
-use base qw(Exporter);
-
-our (@EXPORT_OK, %EXPORT_TAGS, @subs);
-
-@subs = qw(prime each_prime);
-
-@EXPORT_OK = @subs;
-%EXPORT_TAGS = (  all  =>    [ @subs ],
+our @EXPORT_OK = qw(prime each_prime);
+our %EXPORT_TAGS = (  all  =>    [ @EXPORT_OK ],
 );
 
 sub croak {
@@ -68,20 +62,20 @@ prime numbers of the first range may be accessed by @{$$primes[0]}.
 =cut
 
 sub prime {
-    my $data_ref = $_[0];
+    my $data = $_[0];
     croak q~usage: prime (\@ranges)~
-      unless @$data_ref && ref $data_ref eq 'ARRAY';
+      unless @$data && ref $data eq 'ARRAY';
 	
     my (%composite, @prime);
-    for (my $s = 0; $s < @$data_ref; $s++) {
-        for (my $i = 2; $i <= $$data_ref[$s][1]; $i++) {
+    for (my $s = 0; $s < @$data; $s++) {
+        for (my $i = 2; $i <= $$data[$s][1]; $i++) {
             next if $composite{$i};
 	    my $calc = 0;	
-	    for (my $c = 2; $calc <= $$data_ref[$s][1]; $c++)  {
+	    for (my $c = 2; $calc <= $$data[$s][1]; $c++)  {
 	        $calc = $i * $c;
 	        $composite{$calc} = 1;
 	    }
-	    if ($i > $$data_ref[$s][0]) {
+	    if ($i > $$data[$s][0]) {
                 push @{$prime[$s]}, $i;
             }
         }
@@ -107,12 +101,12 @@ after usage of each_prime().
 =cut
 
 sub each_prime {
-    my ($item, $data_ref) = @_;
+    my ($item, $data) = @_;
     croak q~usage: each_prime ($item, $primes)~
-      unless defined $item && ref $data_ref eq 'ARRAY';
+      unless defined $item && ref $data eq 'ARRAY';
 
     unless (${__PACKAGE__."::each_prime_$item"}) {
-        @{__PACKAGE__."::each_prime_$item"} = @{$$data_ref[$item]};
+        @{__PACKAGE__."::each_prime_$item"} = @{$$data[$item]};
         ${__PACKAGE__."::each_prime_$item"} = 1;
     }
 
@@ -125,7 +119,7 @@ sub each_prime {
 1;
 __END__
 
-=head2 EXPORT
+=head1 EXPORT
 
 C<prime(), each_prime()> upon request.
 
