@@ -1,6 +1,6 @@
 package Math::Prime::Simple;
 
-$VERSION = '0.10';
+$VERSION = '0.12';
 @EXPORT_OK = qw(prime each_prime);
 
 use strict 'vars';
