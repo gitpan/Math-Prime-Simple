@@ -1,7 +1,7 @@
 Math::Prime::Simple
 ===================
 
-Calculate prime numbers.
+Calculate prime numbers
 
 INSTALLATION
 
@@ -16,8 +16,7 @@ SCRIPTS
 
 bin/prime.pl
 
-Interface to Math::Prime::Simple that contains 
-predefined options and outputs results.
+Outputs simple primes.
 
 LICENSE
 
