@@ -1,6 +1,6 @@
 package Math::Prime::Simple;
 
-$VERSION = '0.08';
+$VERSION = '0.09';
 @EXPORT_OK = qw(prime each_prime);
 
 use strict 'vars';
@@ -21,10 +21,10 @@ Math::Prime::Simple - Calculate prime numbers
  );
 
  # primes calculation
- $primes = prime(\@ranges);
+ $primes = prime( \@ranges );
 
  # primes iteration
- while ($prime = each_prime(0, $primes)) {
+ while ($prime = each_prime( 0, $primes )) {
      print "$prime\n";
  }
 
@@ -42,7 +42,7 @@ Calculates prime numbers.
              [ 10000, 11000 ],
  );
 
- $primes = prime(\@ranges);
+ $primes = prime( \@ranges );
 
 Each range within @ranges will be evaluated and its prime numbers will be
 saved within the arrayref $primes, accessible by the array index; the 
@@ -51,23 +51,27 @@ prime numbers of the first range may be accessed by @{$primes->[0]}.
 =cut
 
 sub prime {
-    my $ranges = shift;
-    croak 'usage: prime(\@ranges)' unless @$ranges;
+    my ($ranges) = @_;
+    croak 'usage: prime( \@ranges )' unless @$ranges;
     	
-    my(%composite, @primes);
+    my (%composite, @primes);
+    
     for (my $s = 0; $s < @$ranges; $s++) {
         for (my $i = 2; $i <= $ranges->[$s][1]; $i++) {
             next if $composite{$i};
+	    
 	    my $calc = 0;	
 	    for (my $c = 2; $calc <= $ranges->[$s][1]; $c++)  {
 	        $calc = $i * $c;
 	        $composite{$calc} = 1;
 	    }
+	    
 	    if ($i > $ranges->[$s][0]) {
                 push @{$primes[$s]}, $i;
             }
         }
     }    
+    
     return \@primes;
 }
 
@@ -75,7 +79,7 @@ sub prime {
 
 Returns each prime number as string.
 
- while ($prime = each_prime($index, $primes)) {
+ while ($prime = each_prime( $index, $primes )) {
      print "$prime\n";
  }
 
@@ -88,21 +92,23 @@ after usage of each_prime().
 =cut
 
 sub each_prime {
-    my($index, $primes) = @_;
-    croak 'usage: each_prime($index, $primes)'
-      unless defined $index && @$primes;
+    my ($index, $primes) = @_;
+    croak 'usage: each_prime( $index, $primes )'
+      unless (defined $index && @$primes);
       
-    my $PRIMES = __PACKAGE__."::each_prime_$index";
+    my $PRIMES = __PACKAGE__."::_each_prime_$index";
           
     unless (${$PRIMES}) {
         @{$PRIMES} = @{$primes->[$index]};
         ${$PRIMES} = 1;
-    }    
+    }
+        
     if (@{$PRIMES}) {
         return shift @{$PRIMES};
     }
     else { 
         ${$PRIMES} = 0; 
+	
 	return undef;
     }
 }

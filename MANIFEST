@@ -1,5 +1,5 @@
 bin/prime.pl
-CHANGES
+Changes
 lib/Math/Prime/Simple.pm
 Makefile.PL
 MANIFEST			This list of files
