@@ -1,14 +1,14 @@
-# $Id: Simple.pm,v 0.05 2004/01/14 22:40:56 sts Exp $
+# $Id: Simple.pm,v 0.06 2004/01/14 22:40:56 sts Exp $
 
 package Math::Prime::Simple;
 
 use 5.006;
-use base qw(Exporter);
+use base(Exporter);
 use integer;
 use strict 'vars';
 use warnings;
 
-our $VERSION = '0.05';
+our $VERSION = '0.06';
 
 our @EXPORT_OK = qw(prime each_prime);
 our %EXPORT_TAGS = (  all  =>    [ @EXPORT_OK ],
